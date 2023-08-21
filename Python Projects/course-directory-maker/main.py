@@ -27,6 +27,17 @@ def main():
             course_subfolder_name = str(input(f"What would you like to put in this {course} folder? (q to quit):\t"))
             while course_subfolder_name != "q":
                 os.makedirs(os.path.join(os.getcwd(), course_subfolder_name))
+            
+                make_iter_folders = str(input(f"Would you like to create various, similar folders based on {course_subfolder_name}? (y/n):\t"))
+                if make_iter_folders == "y":
+                    os.chdir(course_subfolder_name)
+                    iter_folders_count = int(input(f"How many {course_subfolder_name} folders would you like to make: "))
+                    for i in range(1, iter_folders_count+1):
+                        os.makedirs(os.path.join(os.getcwd(), f"{course_subfolder_name} #{i}"))
+                    os.chdir(os.path.dirname(os.getcwd()))
+
+                    
+            
                 course_subfolder_name = str(input(f"What would you like to put in this {course} folder? (q to quit):\t"))
         os.chdir(os.path.dirname(os.getcwd()))
 

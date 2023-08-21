@@ -10,7 +10,7 @@ for dir in */; do
     # Check if the specified directory exists
     if [ -d "$directory" ]; then
         # Delete all contents of the directory
-        rm -rf "$directory"/*
+        rm -r "$directory"
         echo "Contents of '$directory' deleted."
     else
         echo "Directory '$directory' does not exist."

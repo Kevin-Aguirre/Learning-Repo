@@ -1,3 +1,6 @@
+#make code cleaner 
+#make a readme.md that shows file structure example, and says this si sailored for students who are not comfortable using the terminal to make directories quickly
+
 import os 
 
 def main():

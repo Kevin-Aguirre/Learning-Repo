@@ -1,0 +1,10 @@
+/crud-app/backend/node_modules
+/crud-app/node_modules
+/crud-app/frontend/node_modules
+/crud-app/.env
+/mern-auth/server/.env
+/mern-auth/server/node_modules
+/node-learning/node_modules
+/react-learning/airbnb/node_modules
+/react-learning/meme-generator/node_modules
+/react-learning/travel-journal/node_modules

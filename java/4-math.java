@@ -8,6 +8,6 @@ public class Maths {
         System.out.println(Math.sqrt(196));
         System.out.println(Math.abs(-1.22));
         System.out.println(Math.random()); // random float from 0.0 to 1.0 inclusive
-
+        // and more..
     }
 }

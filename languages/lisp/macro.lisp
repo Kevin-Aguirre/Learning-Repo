@@ -1,62 +1,101 @@
 #!/usr/bin/sbcl --script
 
+(defun has-repeats (lst)
+	(not (= (length lst) (length (remove-duplicates lst))))
+)
+
+(defun print-res (flag)
+	(if 
+		flag
+		(format t "Is Function Definition valid?: true~%")
+		(format t "Is Function Definition valid?: false~%")
+	)
+)
+
 (defun allxyz (lst)
 	(every (lambda (elem) (member elem '(x y z))) lst)
 )
 
-(defmacro countElems (lst) 
-	`(if (null ,lst) 0 (+ (countElems (cdr ,lst)) 1))
-)
-
 (defmacro validate (lst)
-	`(cond 
+	`(progn 
+		; flag used to check if entire fn definition is valid
+		(let ((isvalid t))
+		
 		; checking to see if we get a list 
-		(
-			(not (listp ,lst)) 
-			(write-line "Expected a list."))
+		(if (not (listp ,lst)) 
+			(progn
+				(format t "Function definition is not a list.~%")
+				(setq isvalid nil)
+			)
 
-		; checking if function def has >= length 4 ('defun', fn_name, param_list, fn_logic...)
-		(
-			(not (>= (countElems ,lst) 4))
-			(format t "does not have length of at least 4~A~%" (car ,lst))
 		)
 
-		; checking to see if we are staring off with 'defun'
-		(
+		; checking if function def has >= length 4 ('defun', fn_name, param_list, fn_logic...)
+		(if
+			(not (= (length ,lst) 4))
+			(progn
+				(format t "Function definition does not have length of at least 4.~%")
+				(setq isvalid nil)
+			)
+		)
+
+		; validating defun
+		(if
 			(not (eq (car ,lst) 'defun))
-			(format t "does not start with defun ~A~%" (car ,lst))
+			(progn
+				(format t "The function definition does not start with 'defun' ~A~%" (car ,lst))
+				(setq isvalid nil)
+			)
+			
 		)
 
 		; checking to see if the name is an atom
-		(
+		(format t "Validating Function Name...~%")
+		(format t "~A: " (car (cdr ,lst)))
+		(if
 			(not (every #'alpha-char-p (symbol-name (car (cdr ,lst)))))
-			(format t "fn name is not alphabetical ~A~%" (car (cdr ,lst)))
+			(progn
+				(setq isvalid nil)
+				(format t "invalid")
+			)
+			
+			(format t "valid")
 		)
 
 		; checking to see if the parameters are x, y, or z
-		(
-			(not (and 
-				(<= (countElems (car (cdr (cdr ,lst)))) 3) 
-				(allxyz (car (cdr (cdr ,lst)))))
+		(format t "~%Validating Parameters...~%")
+		(dolist (item (car (cdr (cdr ,lst)))) 
+			(progn
+				(format t "~A: " item)
+				(if
+					(member item '(x y z))
+					(format t "valid~%")
+					(progn
+						(format t "invalid~%")
+						(setq isvalid nil)
+					)
+					
+				)
 			)
-			(format t "parameter list is not comprised of x, y, or z~A~%" (car (cdr (cdr ,lst))))
 		)
-				
-		;(t (progn 
-		;	(format t "current list ~A~%" ,lst)
-		;	(format t "car list ~A~%" (car ,lst))
-		;	(format t "cdr list ~A~%" (cdr ,lst))
-		;	(format t "current list ~A~%" ,lst)
-		;))
 
+		; checking to see if paramter list is unique 
+		(format t "Checking if parameter list has unique values...")
+		(if
+			(has-repeats (car (cdr (cdr ,lst))))
+			(progn
+				(format t "invalid~%")
+				(setq isvalid nil)
+			)
 			
-	
-		
-		(t (write-line "looks okay"))
+			(format t "valid~%")
+		)
 
+		(print-res isvalid)
+		)
 	)
 )
 
 
-(validate '(defun FOO () x))
+(validate '(defun FOO (x y z) a))
 

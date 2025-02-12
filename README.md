@@ -1,3 +1,3 @@
-##Projects
+## Projects
 
-This repository collects all of my projects. 
+This repository contains random code I've written in the process of learning a new language, framework, or module.

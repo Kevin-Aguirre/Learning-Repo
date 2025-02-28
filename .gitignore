@@ -1,10 +1,6 @@
-/projects/crud-app/backend/node_modules
-/projects/crud-app/node_modules
-/projects/crud-app/frontend/node_modules
-/projects/crud-app/.env
-/projects/mern-auth/server/.env
-/projects/mern-auth/server/node_modules
-/frameworks/node-learning/node_modules
-/frameworks/react-learning/airbnb/node_modules
-/frameworks/react-learning/meme-generator/node_modules
-/frameworks/react-learning/travel-journal/node_modules
+# ignore these
+/languages/haskell/*
+
+
+# keep these
+!/languages/haskell/*.hs

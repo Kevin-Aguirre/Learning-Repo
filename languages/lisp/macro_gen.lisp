@@ -17,17 +17,16 @@
 )
 
 (defmacro validate (param-lst)
-	(let ((lst (genysm)))
+	(let ((lst (gensym)))
 		`(let ((,lst ,param-lst))
-
 			(progn 
-			(let ((isvalid t))	
+				(let ((isvalid t))	
 				(format t "-----START CHECK-----~%")
 				; checking to see if we get a list 
 				(if (not (listp ,lst)) 
 					(progn
 						(format t "Function definition is not a list.~%")
-						(setq isvalid nil)
+						(setf isvalid nil)
 					)
 
 				)
@@ -42,7 +41,7 @@
 							(< (length ,lst) 4)
 							(progn
 								(format t "Function definition does not have length of at least 4.~%")
-								(setq isvalid nil)
+								(setf isvalid nil)
 							)
 						)
 
@@ -51,7 +50,7 @@
 							(not (eq (car ,lst) 'defun))
 							(progn
 								(format t "The function definition does not start with 'defun' ~A~%" (car ,lst))
-								(setq isvalid nil)
+								(setf isvalid nil)
 							)
 						)
 
@@ -59,7 +58,7 @@
 							(not (listp (car (cdr (cdr ,lst)))))
 							(progn
 								(format t "Argument 3 is not of type list.~%")
-								(setq isvalid nil)
+								(setf isvalid nil)
 							)
 						)
 						
@@ -77,7 +76,7 @@
 						(if
 							(not (every #'alpha-char-p (symbol-name (car (cdr ,lst)))))
 							(progn
-								(setq isvalid nil)
+								(setf isvalid nil)
 								(format t "invalid")
 							)
 							
@@ -96,7 +95,7 @@
 										(format t "valid~%")
 										(progn
 											(format t "invalid~%")
-											(setq isvalid nil)
+											(setf isvalid nil)
 										)
 									)
 								)
@@ -111,7 +110,7 @@
 							(has-repeats (car (cdr (cdr ,lst))))
 							(progn
 								(format t "invalid~%")
-								(setq isvalid nil)
+								(setf isvalid nil)
 							)
 							
 							(format t "valid~%")
@@ -123,7 +122,7 @@
 
 				(print-res isvalid)
 				(format t "-----END CHECK-----~%~%")
-			)
+			))
 
 		)
 	)
@@ -133,5 +132,6 @@
 (validate '(defun multiply (x y z) (* x y z)))
 (validate '(multiply (x y z) (* x y z)))
 (validate '(defun add3Nums (x y z) (+ x y z)))
-(validate '(defun doubleNum (num) (* num 2)))
+(validate '(defun doubleNum (num) (* num 2))))
+(validate '(defun getPI 3.1415))
 
